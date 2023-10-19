@@ -1,16 +1,18 @@
-const express = require('express')
-const path = require('path')
-const app = express()
-const PORT = 3000
+const express = require('express');
+const app = express();
+const path = require('path');
+const port = 3000
 
-app.get('/', (req, res)=>{
-    res.sendFile(path.join(__dirname+'/home.html'))
-})
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/kontakt', (req, res)=>{
-    res.sendFile(path.join(__dirname+'/contact.html'))
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
+});
 
-app.listen(PORT, ()=>{
-    console.log(`Server listening on port ${PORT}`)
-})
+app.get('/kontakt', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'contact.html'));
+});
+
+app.listen(port, () => {
+  console.log(`App running on port ${port}`);
+});
