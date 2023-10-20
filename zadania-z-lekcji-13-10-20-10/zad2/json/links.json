@@ -1,0 +1,18 @@
+[
+    {
+        "url": "/api/students",
+        "description": "zwraca listę minimum 10 uczniów"
+    },
+    {
+        "url": "/api/subjects",
+        "description": "zwraca listę minimum 10 przedmiotów szkolnych"
+    },
+    {
+        "url": "/api/subjects/:id",
+        "description": "wyświetla przedmiot o podanym id"
+    },
+    {
+        "url": "/api/student/:id",
+        "description": "wyświetla ucznia o podanym id"
+    }
+]
