@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: mySqlDatabase
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: webDB
+    ports:
+      - "3307:3306"
