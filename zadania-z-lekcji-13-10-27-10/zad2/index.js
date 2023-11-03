@@ -41,13 +41,19 @@ app.get('/kontakt', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'contact.html'));
 });
 
-app.post('/kontakt', (req, res) => {
+app.post('/kontakt', async (req, res) => {
   const name = req.body.text;
   const email = req.body.email;
   const select = req.body.topic;
   const textarea = req.body.msg;
-  res.redirect('/');
   console.log(`Name: ${name}, email: ${email}, topic: ${select}, message: ${textarea}`);
+  try {
+    await query('INSERT INTO Messages (name, email, topic, message) VALUES (?, ?, ?, ?)', [name, email, select, textarea]);
+  } catch (err) {
+    console.error('Wystąpił błąd:', err);
+    res.status(500).send('Wystąpił błąd podczas przetwarzania zapytania.');
+  }
+  res.redirect('/');
 });
 
 router.get('/', async (req, res) => {
