@@ -1,0 +1,62 @@
+[
+    {
+        "id": 23,
+        "name": "LeBron",
+        "surname": "James",
+        "email": "lebronjames@gmail.com"
+    },
+    {
+        "id": 30,
+        "name": "Stephen",
+        "surname": "Curry",
+        "email": "stephencurry@gmail.com"
+    },
+    {
+        "id": 13,
+        "name": "James",
+        "surname": "Harden",
+        "email": "jamesharden@gmail.com"
+    },
+    {
+        "id": 35,
+        "name": "Kevin",
+        "surname": "Durant",
+        "email": "kevindurant@gmail.com"
+    },
+    {
+        "id": 2,
+        "name": "Kawhi",
+        "surname": "Leonard",
+        "email": "kawhileonard@gmail.com"
+    },
+    {
+        "id": 12,
+        "name": "Kyrie",
+        "surname": "Irving",
+        "email": "kyrieirving@gmail.com"
+    },
+    {
+        "id": 34,
+        "name": "Giannis",
+        "surname": "Antetokounmpo",
+        "email": "giannisantetokounmpo@gmail.com"
+    },
+    {
+        "id": 0,
+        "name": "Russell",
+        "surname": "Westbrook",
+        "email": "russellwestbrook@gmail.com"
+    },
+    {
+        "id": 11,
+        "name": "Trae",
+        "surname": "Young",
+        "email": "traeyoung@gmail.com"
+    },
+    {
+        "id": 21,
+        "name": "Joel",
+        "surname": "Embiid",
+        "email": "joelembiid@gmail.com"
+    }
+]
