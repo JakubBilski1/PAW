@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "Matematyka",
+        "hoursAWeek": 5
+    },
+    {
+        "id": 2,
+        "name": "Język polski",
+        "hoursAWeek": 4
+    },
+    {
+        "id": 3,
+        "name": "Historia",
+        "hoursAWeek": 3
+    },
+    {
+        "id": 4,
+        "name": "Fizyka",
+        "hoursAWeek": 4
+    },
+    {
+        "id": 5,
+        "name": "Chemia",
+        "hoursAWeek": 3
+    },
+    {
+        "id": 6,
+        "name": "Biologia",
+        "hoursAWeek": 3
+    },
+    {
+        "id": 7,
+        "name": "Informatyka",
+        "hoursAWeek": 2
+    },
+    {
+        "id": 8,
+        "name": "Wychowanie fizyczne",
+        "hoursAWeek": 2
+    },
+    {
+        "id": 9,
+        "name": "Angielski",
+        "hoursAWeek": 4
+    },
+    {
+        "id": 10,
+        "name": "EDB",
+        "hoursAWeek": 1
+    }
+]
