@@ -34,16 +34,22 @@ app.post('/kontakt', async (req, res) => {
   const email = req.body.email;
   const select = req.body.topic;
   const textarea = req.body.msg;
-  console.log(`Name: ${name}, email: ${email}, topic: ${select}, message: ${textarea}`);
+  let data;
   try{
     const db = await connect();
-    await db.db('School').collection('Contact').insertOne({
-      name: name,
-      email: email,
-      topic: select,
-      message: textarea
-    });
-  }catch(err){
+    name !== "" ? 
+      data = {
+        name: name,
+        email: email,
+        topic: select,
+        message: textarea
+      } : data = {
+        email: email,
+        topic: select,
+        message: textarea
+      }
+      await db.db('School').collection('Contact').insertOne(data);
+    }catch(err){
     console.error('Wystąpił błąd:', err);
     res.status(500).send('Wystąpił błąd podczas przetwarzania zapytania.');
   }
