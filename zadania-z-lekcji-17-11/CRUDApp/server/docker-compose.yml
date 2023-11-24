@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    container_name: crudDBContainer
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=crudDB
+    ports:
+      - "5432:5432"
