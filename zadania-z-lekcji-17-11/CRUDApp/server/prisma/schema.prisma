@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Tabela przechowująca informacje o zawodnikach NBA
+model Player {
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  age         Int
+  position    Position     @relation(fields: [positionId], references: [id])
+  positionId  Int
+  team        Team         @relation(fields: [teamId], references: [id])
+  teamId      Int
+  statistics  Statistics[] @relation("PlayerStatistics")
+}
+
+// Tabela przechowująca informacje o zespołach NBA
+model Team {
+  id      Int      @id @default(autoincrement())
+  name    String
+  city    String
+  players Player[]
+  homeGames Game[] @relation("HomeTeam")
+  awayGames Game[] @relation("AwayTeam")
+}
+
+// Tabela przechowująca informacje o pozycjach zawodników
+model Position {
+  id      Int      @id @default(autoincrement())
+  name    String
+  players Player[]
+}
+
+// Tabela przechowująca informacje o meczach NBA
+model Game {
+  id          Int          @id @default(autoincrement())
+  date        DateTime
+  homeTeam    Team         @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  homeTeamId  Int
+  awayTeam    Team         @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  awayTeamId  Int
+  statistics  Statistics[]
+}
+
+// Tabela przechowująca statystyki zawodników w meczach
+model Statistics {
+  id          Int      @id @default(autoincrement())
+  points      Int
+  assists     Int
+  rebounds    Int
+  steals      Int
+  blocks      Int
+  playerId    Int
+  player      Player   @relation("PlayerStatistics", fields: [playerId], references: [id])
+  gameId      Int
+  game        Game     @relation(fields: [gameId], references: [id])
+}
+
