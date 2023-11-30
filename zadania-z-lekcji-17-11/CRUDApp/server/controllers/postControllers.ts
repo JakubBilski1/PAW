@@ -77,6 +77,16 @@ const createPost = async (req: Request, res: Response) => {
 
 const removePost = async (req: Request, res: Response) => {
     try{
+        const postPhotos = await prisma.photo.deleteMany({
+            where: {
+                postId: Number(req.params.id)
+            }
+        });
+        const postCategories = await prisma.postCategory.deleteMany({
+            where: {
+                postId: Number(req.params.id)
+            }
+        });
         const post = await prisma.post.delete({
             where: {
                 id: Number(req.params.id)
