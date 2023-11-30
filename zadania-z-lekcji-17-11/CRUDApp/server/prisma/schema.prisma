@@ -32,7 +32,7 @@ model UserProfile {
 model Post {
   id        Int      @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   categories PostCategory[]
   photo    Photo[]
   title     String
@@ -45,10 +45,9 @@ model Post {
 model PostCategory {
   id        Int      @id @default(autoincrement())
   postId    Int
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   categoryId Int
-  category  Category @relation(fields: [categoryId], references: [id])
-
+  category  Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -60,7 +59,7 @@ model Category {
 model Photo {
   id       Int      @id @default(autoincrement())
   postId   Int
-  post     Post     @relation(fields: [postId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
