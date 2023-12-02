@@ -4,8 +4,8 @@ import { updatePhoto, removePhoto, getPhoto, addPhoto } from '../controllers/pho
 const router: Router = express.Router();
 
 router.get('/:id', getPhoto)
-router.post('/addPhoto', addPhoto)
-router.delete('/removePhoto/:id', removePhoto)
-router.put('/updatePhoto/:id', updatePhoto)
+router.post('/', addPhoto)
+router.delete('/:id', removePhoto)
+router.put('/:id', updatePhoto)
 
 export default router;
