@@ -28,6 +28,7 @@ const getPost = async (req: Request, res: Response) => {
 
 const createPost = async (req: Request, res: Response) => {
     const { userId, title, content, published, categories, photos } = req.body;
+    if(!userId || !title || !content || !published || !categories || !photos) return res.status(400).json({error: "Missing data"});
     try{
         const post = await prisma.post.create({
             data: {
@@ -77,16 +78,6 @@ const createPost = async (req: Request, res: Response) => {
 
 const removePost = async (req: Request, res: Response) => {
     try{
-        const postPhotos = await prisma.photo.deleteMany({
-            where: {
-                postId: Number(req.params.id)
-            }
-        });
-        const postCategories = await prisma.postCategory.deleteMany({
-            where: {
-                postId: Number(req.params.id)
-            }
-        });
         const post = await prisma.post.delete({
             where: {
                 id: Number(req.params.id)
@@ -101,6 +92,7 @@ const removePost = async (req: Request, res: Response) => {
 
 const updatePost = async (req: Request, res: Response) => {
     const { userId, title, content, published } = req.body;
+    if(!userId || !title || !content || !published) return res.status(400).json({error: "Missing data"});
     try{
         const post = await prisma.post.update({
             where: {

@@ -9,7 +9,8 @@ const getPhoto = async (req: Request, res: Response) => {
                 id: Number(req.params.id),
             },
         });
-        res.status(200).json(photo);
+        if(!photo) return res.status(404).json({error: "Photo not found"});
+        res.send(photo);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -18,6 +19,7 @@ const getPhoto = async (req: Request, res: Response) => {
 const addPhoto = async (req: Request, res: Response) => {
     try {
         const { url, postId } = req.body;
+        if(!url || !postId) return res.status(400).json({error: "Missing required data"});
         const photo = await prisma.photo.create({
             data: {
                 url: url as string,
@@ -32,7 +34,9 @@ const addPhoto = async (req: Request, res: Response) => {
 
 const updatePhoto = async (req: Request, res: Response) => {
     try {
-        const { id, url, postId } = req.body;
+        const { url, postId } = req.body;
+        const id = req.params.id;
+        if(!id || !url || !postId) return res.status(400).json({error: "Missing required data"});
         const photo = await prisma.photo.update({
             where: {
                 id: Number(id),
@@ -51,6 +55,7 @@ const updatePhoto = async (req: Request, res: Response) => {
 
 const removePhoto = async (req: Request, res: Response) => {
     try {
+        if(!req.params.id) return res.status(400).json({error: "Missing required data"});
         const photo = await prisma.photo.delete({
             where: {
                 id: Number(req.params.id),

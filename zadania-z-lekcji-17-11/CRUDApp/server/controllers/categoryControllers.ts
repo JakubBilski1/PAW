@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getCategory = async (req: Request, res: Response) => {
+    if(!req.params.id) return res.status(400).json({error: "Missing required data"});
     try {
         const category = await prisma.category.findUnique({
             where: {
@@ -11,6 +12,7 @@ const getCategory = async (req: Request, res: Response) => {
         });
         category ? res.status(200).json(category) : res.status(404).json({ error: 'Category not found' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
@@ -18,6 +20,7 @@ const getCategory = async (req: Request, res: Response) => {
 const addCategory = async (req: Request, res: Response) => {
     try {
         const { name } = req.body;
+        if(!name || !req.body.postId) return res.status(400).json({error: "Missing required data"});
         const postId = await prisma.post.findUnique({
             where: {
                 id: Number(req.body.postId),
@@ -41,13 +44,16 @@ const addCategory = async (req: Request, res: Response) => {
             res.status(404).json({ error: 'Post not found' });
         }
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
 const updateCategory = async (req: Request, res: Response) => {
     try {
-        const { id, name } = req.body;
+        const { name, postId } = req.body;
+        const id = req.params.id;
+        if(!id || !name) return res.status(400).json({error: "Missing required data"});
         const category = await prisma.category.update({
             where: {
                 id: Number(id),
@@ -56,14 +62,24 @@ const updateCategory = async (req: Request, res: Response) => {
                 name: name as string,
             },
         });
+        const updatePostId = await prisma.postCategory.update({
+            where: {
+                id: Number(id)
+            },
+            data: {
+                postId: Number(postId)
+            },
+        });
         res.status(200).json(category);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 const removeCategory = async (req: Request, res: Response) => {
     try {
+        if(!req.params.id) return res.status(400).json({error: "Missing required data"});
         const category = await prisma.category.delete({
             where: {
                 id: Number(req.params.id),
