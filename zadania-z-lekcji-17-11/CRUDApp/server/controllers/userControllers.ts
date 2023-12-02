@@ -21,11 +21,13 @@ const getUser = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    if(!email || !password) return res.status(400).json({error: "Missing required data"});
     try {
         const user = await prisma.user.create({
             data: {
-                email: req.body.email,
-                password: req.body.password
+                email: email as string,
+                password: password as string
             }
         });
         res.status(201).json(user);
@@ -36,6 +38,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const removeUser = async (req: Request, res: Response) => {
+    if(!req.params.id) return res.status(400).json({error: "Missing required data"});
     try {
         const user = await prisma.user.delete({
             where: {
@@ -50,14 +53,16 @@ const removeUser = async (req: Request, res: Response) => {
 };
 
 const updateUser = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    if(!req.params.id || !email || !password) return res.status(400).json({error: "Missing required data"});
     try {
         const user = await prisma.user.update({
             where: {
                 id: Number(req.params.id)
             },
             data: {
-                email: req.body.email,
-                password: req.body.password
+                email: email as string,
+                password: password as string
             }
         });
         res.status(200).json(user);
