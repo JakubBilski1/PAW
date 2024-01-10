@@ -1,5 +1,6 @@
 import Blog from "../pages/Blog/page";
 import Home from "../pages/Home/page";
+import BlogPost from "../Components/BlogPost";
 
 interface RouteElement {
     path: string;
@@ -20,5 +21,11 @@ export const routes: Array<RouteElement> = [
         element: <Blog />,
         name: "Blog",
         hideInNavbar: false
+    },
+    {
+        path: "/blog/:id",
+        element: <BlogPost />,
+        name: "BlogPost",
+        hideInNavbar: true
     }
 ]
