@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <nav>
         <ul>
-            {routes.map((route) => {
+            {routes.filter((route)=>!route.hideInNavbar).map((route) => {
                 return(
                     <li key={route.path}>
                         <Link to={route.path}>{route.name}</Link>
