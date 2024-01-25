@@ -1,0 +1,38 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+header, footer{
+  background-color: #454545;
+  height: 20vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main{
+  display: flex;
+  background-color: #656565;
+  height: 60vh;
+  color: white;
+}
+
+nav{
+  background-color: #454545;
+  width: 20vw;
+  border-right: 2px solid gray;
+}
+
+nav li{
+  color: white;
+  text-decoration: none;
+}
+
+article{
+  background-color: #656565;
+  width: 80vw;
+  height: 100vh;
+  color: white;
+}
