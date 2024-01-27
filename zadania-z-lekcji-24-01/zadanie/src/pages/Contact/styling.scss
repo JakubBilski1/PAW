@@ -1,0 +1,63 @@
+$input-background-color: #fff;
+$input-border-color: #ccc;
+$input-focus-border-color: #66afe9;
+$error-color: red;
+$success-color: green;
+
+form {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid $input-border-color;
+    border-radius: 5px;
+    background-color: $input-background-color;
+
+    &:focus {
+      outline: none;
+      border-color: $input-focus-border-color;
+    }
+  }
+
+  .chBox {
+    display: flex;
+    align-items: center;
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+  }
+
+  .error {
+    color: $error-color;
+    margin-top: 5px;
+  }
+
+  .success {
+    color: $success-color;
+    margin-top: 5px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #454545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+}
