@@ -1,21 +1,20 @@
+import "./styling.scss"
 import { useState } from "react"
 
-function page() {
+function Contact() {
   const [data, setData] = useState<Object>({
     email: '',
     topic: 'general',
     dataAgreement: false,
     message: ''
   })
-  const [errors, setErrors] = useState<{ email: boolean, empty: boolean, messageLength: boolean }>({
-    empty: false,
+  const [errors, setErrors] = useState<{ emptyEmail: boolean, email: boolean, emptyMessage: boolean, messageLength: boolean }>({
+    emptyEmail: false,
+    emptyMessage: false,
     email: false,
     messageLength: false
   })
-  const [messageStatus, setMessageStatus] = useState<{}>({
-    email: false,
-    
-  })
+  const [messageStatus, setMessageStatus] = useState<boolean>(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target as EventTarget & { name: string, value: string }
@@ -27,47 +26,85 @@ function page() {
     }))
   }
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault()
-    const { email, message } = data as { email: string, message: string }
-    if(email === '' || message === '') {
+  const validateData = (email: string, message: string) => {
+    
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+
+    if(email.length === 0 && message.length === 0) {
       setErrors(prev => ({
         ...prev,
-        empty: true
+        emptyEmail: true,
+        emptyMessage: true
       }))
       setMessageStatus(false)
-      return
     }
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-    if(!emailRegex.test(email)) {
+    else if(email.length === 0) {
+      setErrors(prev => ({
+        ...prev,
+        emptyEmail: true,
+        emptyMessage: false
+      }))
+      setMessageStatus(false)
+    }
+    else if(message.length === 0) {
+      setErrors(prev => ({
+        ...prev,
+        emptyEmail: false,
+        emptyMessage: true
+      }))
+      setMessageStatus(false)
+    }
+    else {
+      setErrors(prev => ({
+        ...prev,
+        emptyEmail: false,
+        emptyMessage: false
+      }))
+    }
+    if(email.length > 0 && !emailRegex.test(email)) {
       setErrors(prev => ({
         ...prev,
         email: true
       }))
       setMessageStatus(false)
-      return
     }
-    if(message.length < 20) {
+    else {
+      setErrors(prev => ({
+        ...prev,
+        email: false
+      }))
+    }
+    if(message.length > 0 && message.length < 20) {
       setErrors(prev => ({
         ...prev,
         messageLength: true
       }))
       setMessageStatus(false)
-      return
     }
-    console.log(data)
-    setMessageStatus(true)
-    setErrors(prev => ({
-      ...prev,
-      empty: false,
-      email: false,
-      messageLength: false
-    }))
+    else {
+      setErrors(prev => ({
+        ...prev,
+        messageLength: false
+      }))
+    }
+    if(email.length > 0 && message.length > 0 && emailRegex.test(email) && message.length >= 20) {
+      return true
+    }
+  }
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    const { email, message } = data as { email: string, message: string }
+    const response = validateData(email, message)
+    if(response) {
+      setMessageStatus(true)
+      console.log(data)
+    }
   }
 
   return (
     <>
-      <form action="/" method="POST">
+      {!messageStatus ? <form action="/" method="POST">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -77,7 +114,7 @@ function page() {
           required
         />
         {errors.email && <p className="error">Invalid email address</p>}
-        {errors.empty && <p className="error">This field is required</p>}
+        {errors.emptyEmail && <p className="error">This field is required</p>}
         <br />
 
         <label htmlFor="topic">Topic:</label>
@@ -116,14 +153,13 @@ function page() {
           required
         ></textarea>
         {errors.messageLength && <p className="error">Message must have at least 20 characters</p>}
-        {errors.empty && <p className="error">This field is required</p>}
+        {errors.emptyMessage && <p className="error">This field is required</p>}
         <br />
 
-        <button onClick={(e)=>handleSubmit(e)}>Send</button>
-        {messageStatus && <p className="success">Message sent successfully</p>}
-      </form>
+        <button onClick={(e)=>handleSubmit(e)}>Send</button> 
+      </form> : <p className="success">Your message has been sent</p>}
     </>
   )
 }
 
-export default page
+export default Contact

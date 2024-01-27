@@ -1,17 +1,23 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Contact from "./pages/contact/page"
-import Home from './pages/home/page'
+import "../src/App.scss"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { routes } from "./helpers/routes"
+import NavBar from "./components/NavBar/NavBar"
+import Header from "./components/Header/Header"
 
-function App() {
+function App(): JSX.Element {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
+      <Header />
+      <main>
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            {routes.map((route) =>(
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Routes>
+        </BrowserRouter>
+      </main>
     </>
   )
 }

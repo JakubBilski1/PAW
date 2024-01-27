@@ -1,0 +1,42 @@
+$body-background-color: #454545;
+$header-footer-height: 20vh;
+$main-height: 60vh;
+$nav-width: 20vw;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  background-color: $body-background-color;
+  height: $header-footer-height;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  background-color: #656565;
+  height: $main-height;
+  color: white;
+}
+
+nav {
+  background-color: $body-background-color;
+  width: $nav-width;
+  border-right: 2px solid gray;
+  li {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+article {
+  background-color: #656565;
+  width: calc(100% - #{$nav-width});
+  height: 100vh;
+  color: white;
+}
