@@ -11,20 +11,20 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  profile  UserProfile?
+  profile   UserProfile?
   posts     Post[]
 }
 
 model UserProfile {
   id        Int      @id @default(autoincrement())
-  user     User     @relation(fields: [userId], references: [id])
-  userId    Int     @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @unique
   firstName String
   lastName  String
   nickName  String?
-  country  String?
-  city  String?
-  dob DateTime?
+  country   String?
+  city      String?
+  dob       DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

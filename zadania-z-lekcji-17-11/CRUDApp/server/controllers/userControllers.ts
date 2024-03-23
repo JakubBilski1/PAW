@@ -2,6 +2,16 @@ import { Response, Request } from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+const getUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await prisma.user.findMany();
+        res.status(200).json(users);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 const getUser = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.findUnique({
@@ -76,5 +86,6 @@ export {
     getUser,
     createUser,
     removeUser,
-    updateUser
+    updateUser,
+    getUsers
 };

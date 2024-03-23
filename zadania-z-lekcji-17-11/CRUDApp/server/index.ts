@@ -6,10 +6,19 @@ import photoRoutes from './Routes/photoRoutes';
 import homeRoute from './Routes/homeRoute';
 import userProfileRoutes from './Routes/userProfileRoutes';
 import apiRoute from './Routes/apiRoute';
+import cors from 'cors';
 
 const app = express();
 const port = 5000;
 
+const corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+};
+
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
