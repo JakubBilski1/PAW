@@ -26,6 +26,12 @@ const createUserProfile = async (req: Request, res: Response) => {
     try {
         const { firstName, lastName, nickName, city, country, dob, userId } = req.body;
         if(!firstName || !lastName || !nickName || !city || !country || !dob || !userId) return res.status(400).json({error: "Missing required data"});
+        const existingUserProfile = await prisma.userProfile.findUnique({
+            where: {
+                userId: Number(userId)
+            }
+        });
+        if(existingUserProfile) return res.status(400).json({error: "User profile already exists"});
         const userProfile = await prisma.userProfile.create({
             data: {
                 firstName: firstName as string,

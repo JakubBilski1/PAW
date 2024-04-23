@@ -2,6 +2,26 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+const getPosts = async (req: Request, res: Response) => {
+    try {
+      const posts = await prisma.post.findMany({
+        include: {
+          user: true,
+          categories: {
+            include: {
+              category: true,
+            },
+          },
+          photo: true,
+        },
+      });
+      res.send(posts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+}
+
 const getPost = async (req: Request, res: Response) => {
     try {
       const post = await prisma.post.findUnique({
@@ -54,7 +74,8 @@ const createPost = async (req: Request, res: Response) => {
                 });
             })
         )
-        const createdPhotos = await Promise.all(
+        console.log(req.body)
+        /*const createdPhotos = await Promise.all(
             photos.map(async (photo: string) => {
                 const createdPhoto = await prisma.photo.create({
                     data: {
@@ -69,7 +90,7 @@ const createPost = async (req: Request, res: Response) => {
             post,
             categories: createdCategories,
             photos: createdPhotos
-        });
+        });*/
     }catch(error){
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -113,4 +134,4 @@ const updatePost = async (req: Request, res: Response) => {
     }
 }
 
-export { getPost, createPost, removePost, updatePost };
+export { getPosts, getPost, createPost, removePost, updatePost };
