@@ -1,11 +1,15 @@
-import { User } from "./User";
+import { Category } from "./Category";
 
 export type Post = {
     id: number;
     title: string;
     content: string;
     published: boolean;
-    user: User[]
-    categories: string[];
+    user: {
+        id: number;
+        email: string;
+        password: string;
+    }
+    categories: Category[];
     photos: string[];
 }
