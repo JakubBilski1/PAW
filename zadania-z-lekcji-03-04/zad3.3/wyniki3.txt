@@ -1,0 +1,2 @@
+1. Liczba rosn¹co-malej¹cych ci¹gów: 0
+2. Liczba malej¹co-rosn¹cych ci¹gów: 0
