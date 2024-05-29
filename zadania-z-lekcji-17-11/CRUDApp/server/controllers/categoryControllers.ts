@@ -2,15 +2,20 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const getCategory = async (req: Request, res: Response) => {
-    if(!req.params.id) return res.status(400).json({error: "Missing required data"});
+const getCategories = async (req: Request, res: Response) => {
     try {
-        const category = await prisma.category.findUnique({
-            where: {
-                id: Number(req.params.id),
+        const categories = await prisma.category.findMany({
+            select: {
+                id: true,
+                name: true,
+                posts: {
+                    select: {
+                        id: true,
+                    },
+                },
             },
-        });
-        category ? res.status(200).json(category) : res.status(404).json({ error: 'Category not found' });
+        })
+        res.status(200).json(categories);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -20,10 +25,10 @@ const getCategory = async (req: Request, res: Response) => {
 const addCategory = async (req: Request, res: Response) => {
     try {
         const { name } = req.body;
-        if(!name || !req.body.postId) return res.status(400).json({error: "Missing required data"});
+        if(!name || !req.params.id) return res.status(400).json({error: "Missing required data"});
         const postId = await prisma.post.findUnique({
             where: {
-                id: Number(req.body.postId),
+                id: Number(req.params.id),
             },
         });
         if(postId){
@@ -35,7 +40,7 @@ const addCategory = async (req: Request, res: Response) => {
             const categoryId = category.id;
             const relateWithPost = await prisma.postCategory.create({
                 data: {
-                    postId: Number(req.body.postId),
+                    postId: Number(req.params.id),
                     categoryId: Number(categoryId),
                 },
             });
@@ -92,4 +97,4 @@ const removeCategory = async (req: Request, res: Response) => {
     }
 };
 
-export { updateCategory, removeCategory, getCategory, addCategory };
+export { updateCategory, removeCategory, getCategories, addCategory };
